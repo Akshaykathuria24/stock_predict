@@ -45,3 +45,25 @@ regressor.add(Dropout(0.2))
 regressor.add(Dense(units=1))
 regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
 regressor.fit(x_train, y_train, epochs=100, batch_size=32)
+
+dataset_total = pd.concat((df[open], df[open]), axis = 0)
+inputs = dataset_total[len(dataset_total) -len(df)-60:].values
+
+inputs = inputs.reshape(-1,1)
+inputs = scaler.tranform(inputs)
+
+x_test = []
+for i in range (60,90):
+    x_test.append(inputs[i-60:i, 0])
+x_test = np.array(x_test)
+x_test = np.reshape(x_test,(x_test.shape[0], x_test.shape[1], 1))
+
+predicted_stock_price = regressor.predict(x_test)
+predicted_stock_price = scaler.inverse_transform(predicted_stock_price)
+
+plt.plot(training_set, color = 'red', label = 'Current Stock Price')
+plt.plot(predicted_stock_price, color = 'blue', label = 'Predicted Stock Price')
+plt.title('Stock Price Prediction By Akshay Kathuria')
+plt.xlabel('Time')
+plt.ylabel('Price')
+plt.legend()
