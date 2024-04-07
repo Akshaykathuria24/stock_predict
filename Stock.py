@@ -57,10 +57,10 @@ predicted_stock_price = regressor.predict(x_test)
 predicted_stock_price = scaler.inverse_transform(predicted_stock_price)
 
 # Plot the results
-plt.plot(range(len(training_set)), training_set, color='red', label='Current Stock Price')
-plt.plot(range(len(training_set), len(training_set) + len(predicted_stock_price)), predicted_stock_price, color='blue', label='Predicted Stock Price')
+plt.plot(df.index, training_set, color='red', label='Current Stock Price')
+plt.plot(df.index[-len(predicted_stock_price):], predicted_stock_price, color='blue', label='Predicted Stock Price')
 plt.title('Stock Price Prediction By Akshay Kathuria')
-plt.xlabel('Time')
+plt.xlabel('Time (Years)')
 plt.ylabel('Price')
 plt.legend()
 plt.show()
